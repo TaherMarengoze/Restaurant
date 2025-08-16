@@ -1,4 +1,5 @@
 ﻿
+using Domain.Exceptions;
 using System.Net;
 
 namespace Restaurant.Api.Middlewares;
@@ -41,6 +42,7 @@ public class GlobalErrorHandlingMiddleware(
     {
         httpContext.Response.StatusCode = ex switch
         {
+            NotFoundException => (int)HttpStatusCode.NotFound,
             _ => (int)HttpStatusCode.InternalServerError
         };
 
