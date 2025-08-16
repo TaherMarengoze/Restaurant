@@ -1,16 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using Persistence;
+using Restaurant.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<RestaurantDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-});
-
 // Add services to the container.
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddCoreServices(builder.Configuration);
+builder.Services.AddPresentationServices();
 
-builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -22,10 +18,10 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseStaticFiles();
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
