@@ -7,9 +7,9 @@ public interface IGenericRepository<TEntity, TKey>
     where TEntity : BaseModel<TKey>
     where TKey : struct
 {
-    Task<TEntity> GetAsync(TKey id);
+    Task<TEntity?> GetAsync(TKey id);
 
-    Task<TEntity> GetAllAsync(bool tracked = false);
+    Task<IEnumerable<TEntity>> GetAllAsync(bool tracked = false);
 
     Task AddAsync (TEntity entity);
 
