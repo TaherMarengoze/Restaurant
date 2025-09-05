@@ -6,6 +6,7 @@ namespace Presentation.Controllers;
 public class MenuController : ApiController
 {
     [HttpGet]
+    [ActionName("test")]
     public async Task<ActionResult<string>> TestControllerAsync()
     {
         await Task.Delay(100);
