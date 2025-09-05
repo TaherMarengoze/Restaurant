@@ -1,9 +1,11 @@
 ﻿
+using Contracts.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Services.Abstraction;
 
 namespace Presentation.Controllers;
 
-public class MenuController : ApiController
+public class MenuController(IServiceManager serviceManager) : ApiController
 {
     [HttpGet]
     [ActionName("test")]
@@ -12,5 +14,13 @@ public class MenuController : ApiController
         await Task.Delay(100);
 
         return Ok($"{nameof(MenuController)}: Test Passed");
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<MenuItemDto>> GetMenuItemAsync(Guid menuItemId)
+    {
+        var result = await serviceManager.MenuItemService.GetMenuItem(menuItemId);
+
+        return Ok(result);
     }
 }
