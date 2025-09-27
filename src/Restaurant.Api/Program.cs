@@ -14,6 +14,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+await app.RunDbInitializerAsync();
+
 app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.

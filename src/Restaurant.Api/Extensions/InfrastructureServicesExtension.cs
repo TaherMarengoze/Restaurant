@@ -16,6 +16,7 @@ public static class InfrastructureServicesExtension
             options.UseSqlServer(configuration.GetConnectionString("Default"));
         });
 
+        services.AddScoped<IDbInitializer, DbInitializer>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
