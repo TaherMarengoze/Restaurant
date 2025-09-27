@@ -34,7 +34,11 @@ public class GenericRepository<TModel, TKey>(RestaurantDbContext context)
         // Retrieve all entities asynchronously
         return await query.ToListAsync();
     }
-    public async Task AddAsync(TModel entity) => throw new NotImplementedException();
+    public async Task AddAsync(TModel entity)
+    {
+        await context.Set<TModel>().AddAsync(entity);
+    }
+
     public void Update(TModel entity) => throw new NotImplementedException();
     public void Delete(TModel entity) => throw new NotImplementedException();
 }
