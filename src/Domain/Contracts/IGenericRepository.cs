@@ -1,4 +1,5 @@
 ﻿
+using System.Linq.Expressions;
 using Domain.Models;
 
 namespace Domain.Contracts;
@@ -9,7 +10,9 @@ public interface IGenericRepository<TEntity, TKey>
 {
     Task<TEntity?> GetAsync(TKey id);
 
-    Task<IEnumerable<TEntity>> GetAllAsync(bool tracked = false);
+    Task<IEnumerable<TEntity>> GetAllAsync(
+        Expression<Func<TEntity, bool>>? predicate = null,
+        bool tracked = false);
 
     Task AddAsync (TEntity entity);
 

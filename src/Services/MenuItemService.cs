@@ -25,4 +25,29 @@ public class MenuItemService(IUnitOfWork unitOfWork) : IMenuItemService
 
         return menuItemDto;
     }
+
+    public async Task<IEnumerable<MenuItemDto>> GetMenuItems(Guid[]? ids = null)
+    {
+        IEnumerable<MenuItem> menuItems;
+        if (ids == null || ids.Length == 0)
+        {
+            menuItems = await unitOfWork.GetRepository<MenuItem, Guid>().GetAllAsync();
+        }
+        else
+        {
+            menuItems = await unitOfWork.GetRepository<MenuItem, Guid>()
+                .GetAllAsync(m => ids.Distinct().Contains(m.Id));
+        }
+        //Map
+        var menuItemDtos = menuItems.Select(menuItem => new MenuItemDto
+        {
+            Id = menuItem.Id,
+            Name = menuItem.Name,
+            Description = menuItem.Description,
+            ImageUrl = menuItem.ImageUrl,
+            Price = menuItem.Price,
+        });
+
+        return menuItemDtos;
+    }
 }
