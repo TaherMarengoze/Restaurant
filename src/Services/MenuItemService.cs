@@ -38,6 +38,7 @@ public class MenuItemService(IUnitOfWork unitOfWork) : IMenuItemService
             menuItems = await unitOfWork.GetRepository<MenuItem, Guid>()
                 .GetAllAsync(m => ids.Distinct().Contains(m.Id));
         }
+
         //Map
         var menuItemDtos = menuItems.Select(menuItem => new MenuItemDto
         {
